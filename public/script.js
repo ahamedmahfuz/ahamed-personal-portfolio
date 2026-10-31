@@ -1,274 +1,267 @@
 
-// ======================================
-// PERSONAL PORTFOLIO INTERACTIONS
-// ======================================
+"use strict";
 
-// 1. Footer year
+// Footer year
 document.getElementById("year").textContent =
-    new Date().getFullYear();
+  new Date().getFullYear();
 
-
-// 2. Animated typing effect
-const roleElement = document.querySelector(".hero h2");
-
-const roles = [
-    "Computer Science Student",
-    "Full Stack Developer",
-    "Web Development Enthusiast",
-    "Technology Explorer"
-];
-
-let roleIndex = 0;
-let charIndex = 0;
-let deleting = false;
-
-function typeEffect() {
-    if (!roleElement) return;
-
-    const currentRole = roles[roleIndex];
-
-    roleElement.textContent = currentRole.substring(
-        0,
-        charIndex
-    );
-
-    if (!deleting && charIndex < currentRole.length) {
-        charIndex++;
-        setTimeout(typeEffect, 85);
-    } else if (!deleting) {
-        deleting = true;
-        setTimeout(typeEffect, 1400);
-    } else if (charIndex > 0) {
-        charIndex--;
-        setTimeout(typeEffect, 40);
-    } else {
-        deleting = false;
-        roleIndex = (roleIndex + 1) % roles.length;
-        setTimeout(typeEffect, 300);
-    }
-}
-
-if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-    typeEffect();
-}
-
-
-// 3. Scroll reveal animations
-const revealElements = document.querySelectorAll(
-    ".section-label, .section-title, " +
-    ".about-content, .skills-grid, " +
-    ".projects-grid, .education-card, " +
-    ".contact-description, .contact-form"
-);
-
-revealElements.forEach(element => {
-    element.classList.add("reveal");
-});
-
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add("show");
-            observer.unobserve(entry.target);
-        }
-    });
-}, {
-    threshold: 0.12
-});
-
-revealElements.forEach(element => observer.observe(element));
-
-
-// 4. Animate individual skill cards
-document.querySelectorAll(".skill-card").forEach((card, index) => {
-    card.classList.add("reveal");
-    card.style.transitionDelay = `${(index % 5) * 100}ms`;
-    observer.observe(card);
-});
-
-
-// 5. Mobile navigation
-const navbar = document.querySelector(".navbar");
+// Mobile navigation
+const menuToggle = document.querySelector(".menu-toggle");
 const navLinks = document.querySelector(".nav-links");
 
-if (navbar && navLinks) {
-    const menuButton = document.createElement("button");
+menuToggle.addEventListener("click", () => {
+  const open = navLinks.classList.toggle("open");
+  menuToggle.textContent = open ? "✕" : "☰";
+  menuToggle.setAttribute("aria-expanded", String(open));
+});
 
-    menuButton.className = "menu-toggle";
-    menuButton.innerHTML = "☰";
-    menuButton.setAttribute("aria-label", "Toggle navigation");
-    menuButton.setAttribute("aria-expanded", "false");
+navLinks.querySelectorAll("a").forEach(link => {
+  link.addEventListener("click", () => {
+    navLinks.classList.remove("open");
+    menuToggle.textContent = "☰";
+    menuToggle.setAttribute("aria-expanded", "false");
+  });
+});
 
-    navbar.insertBefore(menuButton, navLinks);
+// Scroll animations
+const reducedMotion = window.matchMedia(
+  "(prefers-reduced-motion: reduce)"
+).matches;
 
-    menuButton.addEventListener("click", () => {
-        const isOpen = navLinks.classList.toggle("open");
+const revealObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add("show");
+      revealObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.08 });
 
-        menuButton.innerHTML = isOpen ? "✕" : "☰";
-        menuButton.setAttribute("aria-expanded", String(isOpen));
-    });
-
-    navLinks.querySelectorAll("a").forEach(link => {
-        link.addEventListener("click", () => {
-            navLinks.classList.remove("open");
-            menuButton.innerHTML = "☰";
-            menuButton.setAttribute("aria-expanded", "false");
-        });
-    });
+function observeReveals(root = document) {
+  root.querySelectorAll(".reveal").forEach(element => {
+    if (reducedMotion) {
+      element.classList.add("show");
+    } else {
+      revealObserver.observe(element);
+    }
+  });
 }
 
+observeReveals();
 
-// 6. Highlight active navigation link
-const sections = document.querySelectorAll("main section");
+// Animated typing effect
+const roleElement = document.getElementById("typing-role");
+const roles = [
+  "Computer Science Undergraduate",
+  "Web Development Enthusiast",
+  "Database Systems Explorer",
+  "Developer & Technology Learner"
+];
+
+if (!reducedMotion) {
+  let roleIndex = 0;
+  let charIndex = 0;
+  let deleting = false;
+
+  function typeRole() {
+    const role = roles[roleIndex];
+    roleElement.textContent = role.slice(0, charIndex);
+
+    let delay = 75;
+
+    if (!deleting && charIndex < role.length) {
+      charIndex++;
+    } else if (!deleting) {
+      deleting = true;
+      delay = 1600;
+    } else if (charIndex > 0) {
+      charIndex--;
+      delay = 35;
+    } else {
+      deleting = false;
+      roleIndex = (roleIndex + 1) % roles.length;
+      delay = 350;
+    }
+
+    setTimeout(typeRole, delay);
+  }
+
+  typeRole();
+}
+
+// Cursor glow
+const cursorGlow = document.querySelector(".cursor-glow");
+
+if (!reducedMotion && window.matchMedia("(pointer: fine)").matches) {
+  window.addEventListener("pointermove", event => {
+    cursorGlow.style.left = `${event.clientX}px`;
+    cursorGlow.style.top = `${event.clientY}px`;
+  }, { passive: true });
+}
+
+// Active navigation link
 const navigationLinks = document.querySelectorAll(".nav-links a");
 
 const sectionObserver = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            navigationLinks.forEach(link => {
-                link.classList.toggle(
-                    "active",
-                    link.getAttribute("href") === `#${entry.target.id}`
-                );
-            });
-        }
-    });
-}, {
-    rootMargin: "-30% 0px -60% 0px"
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      navigationLinks.forEach(link => {
+        link.classList.toggle(
+          "active",
+          link.getAttribute("href") === `#${entry.target.id}`
+        );
+      });
+    }
+  });
+}, { rootMargin: "-25% 0px -60% 0px" });
+
+document.querySelectorAll("main section").forEach(section => {
+  sectionObserver.observe(section);
 });
 
-sections.forEach(section => sectionObserver.observe(section));
-
-
-// 7. Escape HTML to safely display project data
+// Escape database values before inserting HTML
 function escapeHTML(value) {
-    return String(value ?? "").replace(/[&<>"']/g, character => ({
-        "&": "&amp;",
-        "<": "&lt;",
-        ">": "&gt;",
-        '"': "&quot;",
-        "'": "&#39;"
-    })[character]);
+  return String(value ?? "").replace(/[&<>"']/g, character => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;"
+  })[character]);
 }
 
-
-// 8. Validate external project links
+// Accept only safe HTTP/HTTPS project URLs
 function safeLink(url, label) {
-    if (!url) return "";
+  if (!url) return "";
 
-    try {
-        const parsed = new URL(url);
+  try {
+    const parsed = new URL(url);
 
-        if (!["http:", "https:"].includes(parsed.protocol)) {
-            return "";
-        }
-
-        return `<a href="${escapeHTML(parsed.href)}"
-            target="_blank"
-            rel="noopener noreferrer">${label} ↗</a>`;
-    } catch {
-        return "";
+    if (!["http:", "https:"].includes(parsed.protocol)) {
+      return "";
     }
+
+    return `<a href="${escapeHTML(parsed.href)}"
+      target="_blank" rel="noopener noreferrer">
+      ${escapeHTML(label)} ↗
+    </a>`;
+  } catch {
+    return "";
+  }
 }
 
-
-// 9. Fetch projects from MySQL through backend
+// Load extra projects from the existing backend.
+// The featured DBMS project stays visible at all times.
 async function loadProjects() {
-    const container = document.getElementById("project-list");
+  const container = document.getElementById("project-list");
+  const status = document.getElementById("project-status");
 
-    try {
-        const response = await fetch("/api/projects");
+  try {
+    const response = await fetch("/api/projects");
 
-        if (!response.ok) {
-            throw new Error("Unable to load projects");
-        }
-
-        const projects = await response.json();
-
-        if (projects.length === 0) {
-            container.innerHTML = "<p>No projects added yet.</p>";
-            return;
-        }
-
-        container.innerHTML = projects.map(project => `
-            <article class="project-card reveal">
-                <h3>${escapeHTML(project.title)}</h3>
-
-                <p>${escapeHTML(project.description || "")}</p>
-
-                <div class="project-tech">
-                    ${escapeHTML(project.technologies || "")}
-                </div>
-
-                <div class="project-links">
-                    ${safeLink(project.github_link, "GitHub")}
-                    ${safeLink(project.live_link, "Live Demo")}
-                </div>
-            </article>
-        `).join("");
-
-        container.querySelectorAll(".project-card").forEach(card => {
-            observer.observe(card);
-        });
-
-    } catch (error) {
-        container.innerHTML =
-            "<p>Unable to load projects. Please try again later.</p>";
-
-        console.error(error);
+    if (!response.ok) {
+      throw new Error("Projects API unavailable");
     }
+
+    const projects = await response.json();
+
+    if (!Array.isArray(projects)) {
+      throw new Error("Unexpected projects response");
+    }
+
+    if (projects.length === 0) {
+      status.textContent = "";
+      return;
+    }
+
+    const additionalProjects = projects.filter(project =>
+      !String(project.title || "").toLowerCase()
+        .includes("inventory management and sales system")
+    );
+
+    additionalProjects.forEach((project, index) => {
+      const card = document.createElement("article");
+      card.className = "project-card reveal";
+
+      card.innerHTML = `
+        <div class="project-body">
+          <div class="project-meta">
+            <span>DATABASE PROJECT</span>
+            <span>${String(index + 2).padStart(2, "0")} / WORK</span>
+          </div>
+          <h3>${escapeHTML(project.title)}</h3>
+          <p>${escapeHTML(project.description || "")}</p>
+          <div class="skill-tags">
+            ${String(project.technologies || "")
+              .split(",")
+              .filter(Boolean)
+              .map(tech => `<span>${escapeHTML(tech.trim())}</span>`)
+              .join("")}
+          </div>
+          <div class="project-links">
+            ${safeLink(project.github_link, "GitHub")}
+            ${safeLink(project.live_link, "Live Demo")}
+          </div>
+        </div>
+      `;
+
+      container.appendChild(card);
+    });
+
+    observeReveals(container);
+    status.textContent = "";
+  } catch (error) {
+    console.warn("Additional projects could not be loaded:", error);
+    status.textContent =
+      "Featured project displayed. Additional database projects are currently unavailable.";
+  }
 }
 
-
-// 10. Contact form submission
+// Contact form using the existing backend API
 const contactForm = document.getElementById("contact-form");
+const formStatus = document.getElementById("form-status");
 
-contactForm.addEventListener("submit", async function(event) {
-    event.preventDefault();
+contactForm.addEventListener("submit", async event => {
+  event.preventDefault();
 
-    const status = document.getElementById("form-status");
+  const data = {
+    name: document.getElementById("name").value.trim(),
+    email: document.getElementById("email").value.trim(),
+    message: document.getElementById("message").value.trim()
+  };
 
-    const data = {
-        name: document.getElementById("name").value.trim(),
-        email: document.getElementById("email").value.trim(),
-        message: document.getElementById("message").value.trim()
-    };
+  if (!data.name || !data.email || !data.message) {
+    formStatus.textContent = "Please complete all fields.";
+    return;
+  }
 
-    if (!data.name || !data.email || !data.message) {
-        status.textContent = "Please complete all fields.";
-        return;
+  const submitButton = contactForm.querySelector("button");
+  submitButton.disabled = true;
+  formStatus.textContent = "Sending your message...";
+
+  try {
+    const response = await fetch("/api/messages", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(data)
+    });
+
+    const result = await response.json();
+
+    if (!response.ok) {
+      throw new Error(result.error || "Message could not be sent.");
     }
 
-    status.textContent = "Sending your message...";
-
-    const submitButton = contactForm.querySelector("button");
-    submitButton.disabled = true;
-
-    try {
-        const response = await fetch("/api/messages", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(data)
-        });
-
-        const result = await response.json();
-
-        if (!response.ok) {
-            throw new Error(result.error || "Message could not be sent.");
-        }
-
-        status.textContent = "✓ Your message was sent successfully!";
-        contactForm.reset();
-
-    } catch (error) {
-        status.textContent = error.message;
-    } finally {
-        submitButton.disabled = false;
-    }
+    formStatus.textContent = "✓ Your message was sent successfully!";
+    contactForm.reset();
+  } catch (error) {
+    formStatus.textContent =
+      error.message || "Unable to send your message right now.";
+  } finally {
+    submitButton.disabled = false;
+  }
 });
 
-
-// 11. Load the portfolio projects
 loadProjects();

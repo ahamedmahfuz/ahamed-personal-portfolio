@@ -2,155 +2,237 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Portfolio | Developer</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0b1020">
+  <meta name="description" content="Portfolio of Ahamed Mahfuz, Computer Science undergraduate and developer.">
+  <title>Ahamed Mahfuz | Developer Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
 </head>
 <body>
+  <div class="cursor-glow" aria-hidden="true"></div>
 
-    <header>
-        <nav class="navbar">
-            <a href="#home" class="logo">Portfolio<span>.</span></a>
+  <header class="site-header">
+    <nav class="navbar container" aria-label="Main navigation">
+      <a class="logo" href="#home">AM<span>.</span></a>
 
-            <ul class="nav-links">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#skills">Skills</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
+      <button class="menu-toggle" type="button"
+        aria-label="Toggle navigation" aria-expanded="false"
+        aria-controls="nav-links">☰</button>
 
-            <a href="#contact" class="nav-button">Let's Talk</a>
-        </nav>
-    </header>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="#home" class="active">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#education">Education</a></li>
+      </ul>
 
-    <main>
-        <!-- HOME -->
-        <section id="home" class="hero">
-            <div class="hero-content">
-                <p class="tagline">WELCOME TO MY PORTFOLIO</p>
+      <a href="#contact" class="nav-button">Let's Connect ↗</a>
+    </nav>
+  </header>
 
-                <h1>Hello, I'm <span>Ahamed Mahfuz</span></h1>
+  <main>
+    <section class="hero container" id="home">
+      <div class="hero-copy reveal">
+        <div class="eyebrow"><span class="status-dot"></span> OPEN TO LEARNING & OPPORTUNITIES</div>
+        <p class="hero-kicker">HELLO, I'M AHAMED MAHFUZ</p>
+        <h1>Building ideas<br>into <span class="gradient-text">digital reality.</span></h1>
+        <p class="hero-role"><span id="typing-role">Computer Science Undergraduate</span><span class="typing-cursor">|</span></p>
+        <p class="hero-description">
+          I explore software development, databases, and web technologies,
+          turning practical ideas into meaningful digital projects.
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#projects">Explore My Work <span>↗</span></a>
+          <a class="btn btn-outline" href="#about">More About Me ↓</a>
+        </div>
+        <div class="hero-footnote">BASED IN CHENNAI, INDIA <span>✦</span> COMPUTER SCIENCE</div>
+      </div>
 
-                <h2>Computer Science Student & Developer</h2>
+      <div class="hero-visual reveal">
+        <div class="orbit orbit-one"></div>
+        <div class="orbit orbit-two"></div>
+        <div class="visual-main glass-card">
+          <div class="window-bar"><span></span><span></span><span></span><small>developer.js</small></div>
+          <div class="code-lines">
+            <p><em>const</em> developer = {</p>
+            <p class="indent">name: <strong>"Ahamed Mahfuz"</strong>,</p>
+            <p class="indent">focus: <strong>"Building & Learning"</strong>,</p>
+            <p class="indent">interests: [</p>
+            <p class="indent-two"><strong>"Web Development"</strong>,</p>
+            <p class="indent-two"><strong>"Database Systems"</strong></p>
+            <p class="indent">],</p>
+            <p class="indent">curious: <b>true</b></p>
+            <p>};</p>
+          </div>
+          <div class="code-footer"><span class="status-dot"></span> Always exploring something new</div>
+        </div>
+        <div class="float-chip chip-top">✦ Creative Thinking</div>
+        <div class="float-chip chip-bottom">⚡ Build · Learn · Improve</div>
+      </div>
+    </section>
 
-                <p class="hero-description">
-                    I build creative digital experiences and explore
-                    technology through programming, web development
-                    and innovative projects.
-                </p>
+    <section class="section container" id="about">
+      <div class="section-heading reveal">
+        <p class="section-label">01 / ABOUT ME</p>
+        <h2>More than just <span class="gradient-text">code.</span></h2>
+        <p>Curiosity, creativity, and a passion for technology.</p>
+      </div>
 
-                <div class="hero-buttons">
-                    <a href="#projects" class="primary-btn">Explore My Work</a>
-                    <a href="#contact" class="secondary-btn">Contact Me</a>
-                </div>
+      <div class="bento-grid about-grid">
+        <article class="bento-card about-main reveal">
+          <span class="card-icon">✳</span>
+          <p class="card-overline">MY STORY</p>
+          <h3>Hi, I'm Ahamed.</h3>
+          <p>
+            I'm a Computer Science undergraduate at B.S. Abdur Rahman
+            Crescent Institute of Science and Technology, Vandalur, Chennai.
+            I enjoy understanding how software works and building
+            applications that solve practical problems.
+          </p>
+          <p>
+            My interests include web development, programming,
+            database systems, and exploring new technologies.
+          </p>
+          <div class="card-bottom">LEARNING EVERY DAY <span>↗</span></div>
+        </article>
+
+        <article class="bento-card purple-card reveal">
+          <span class="big-symbol">⌘</span>
+          <div>
+            <p class="card-overline">WHAT DRIVES ME</p>
+            <h3>Think. Create.<br>Improve.</h3>
+            <p>Turning curiosity into practical skills.</p>
+          </div>
+        </article>
+
+        <article class="bento-card location-card reveal">
+          <span class="card-icon">◎</span>
+          <p class="card-overline">CURRENTLY BASED IN</p>
+          <h3>Chennai,<br>Tamil Nadu.</h3>
+          <p>India 🇮🇳</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section container" id="skills">
+      <div class="section-heading reveal">
+        <p class="section-label">02 / MY TOOLKIT</p>
+        <h2>Skills & <span class="gradient-text">technologies.</span></h2>
+        <p>Technologies I'm learning and working with.</p>
+      </div>
+
+      <div class="skills-grid">
+        <article class="skill-panel reveal">
+          <div class="skill-panel-icon">◈</div>
+          <h3>Frontend</h3>
+          <p>Building interactive web experiences.</p>
+          <div class="skill-tags"><span>HTML5</span><span>CSS3</span><span>JavaScript</span></div>
+        </article>
+
+        <article class="skill-panel reveal">
+          <div class="skill-panel-icon">⌘</div>
+          <h3>Backend</h3>
+          <p>Working with server-side applications.</p>
+          <div class="skill-tags"><span>Node.js</span><span>Express.js</span></div>
+        </article>
+
+        <article class="skill-panel reveal">
+          <div class="skill-panel-icon">▤</div>
+          <h3>Databases</h3>
+          <p>Organising and querying structured data.</p>
+          <div class="skill-tags"><span>SQL</span><span>MySQL</span><span>DBMS</span></div>
+        </article>
+
+        <article class="skill-panel reveal">
+          <div class="skill-panel-icon">◇</div>
+          <h3>Programming & Tools</h3>
+          <p>Developing problem-solving skills.</p>
+          <div class="skill-tags"><span>Python</span><span>Java</span><span>Git</span><span>GitHub</span></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section container" id="projects">
+      <div class="section-heading reveal">
+        <p class="section-label">03 / SELECTED WORK</p>
+        <h2>Things I've <span class="gradient-text">built.</span></h2>
+        <p>A collection of projects and technical explorations.</p>
+      </div>
+
+      <div class="projects-grid" id="project-list">
+        <article class="project-card featured-project reveal">
+          <div class="project-visual">
+            <div class="mock-dashboard">
+              <div class="mock-top"><span>INVENTORY / DASHBOARD</span><span>● ● ●</span></div>
+              <div class="mock-stats"><div><small>Products</small><strong>▥</strong></div><div><small>Stock</small><strong>▤</strong></div><div><small>Sales</small><strong>↗</strong></div></div>
+              <div class="mock-bars"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+              <div class="mock-row"></div><div class="mock-row short"></div>
             </div>
+          </div>
+          <div class="project-body">
+            <div class="project-meta"><span>FEATURED PROJECT</span><span>01 / DBMS</span></div>
+            <h3>Inventory Management and Sales System</h3>
+            <p>Designed a database-driven system for product categorisation, inventory management, stock tracking, and sales processing.</p>
+            <div class="skill-tags"><span>SQL</span><span>Joins</span><span>Views</span><span>Stored Procedures</span><span>Triggers</span></div>
+            <p class="project-extra">Also implemented aggregate functions, subqueries, functions, and cursors.</p>
+          </div>
+        </article>
+      </div>
+      <p id="project-status" class="project-status" aria-live="polite"></p>
+    </section>
 
-            <div class="hero-card">
-                <div class="profile-circle">AM</div>
-                <h3>Developer</h3>
-                <p>Learning. Building. Innovating.</p>
-                <div class="availability">
-                    <span></span> Open to opportunities
-                </div>
-            </div>
-        </section>
+    <section class="section container" id="education">
+      <div class="section-heading reveal">
+        <p class="section-label">04 / ACADEMIC JOURNEY</p>
+        <h2>Where I'm <span class="gradient-text">learning.</span></h2>
+      </div>
+      <article class="education-card reveal">
+        <div class="education-icon">🎓</div>
+        <div>
+          <p class="card-overline">UNDERGRADUATE EDUCATION</p>
+          <h3>Bachelor of Technology — Computer Science</h3>
+          <p>B.S. Abdur Rahman Crescent Institute of Science and Technology</p>
+          <span>Vandalur, Chennai, Tamil Nadu</span>
+        </div>
+        <div class="education-decoration">✦</div>
+      </article>
+    </section>
 
-        <!-- ABOUT -->
-        <section id="about" class="section">
-            <p class="section-label">GET TO KNOW ME</p>
-            <h2 class="section-title">About <span>Me</span></h2>
+    <section class="section container" id="contact">
+      <div class="contact-layout">
+        <div class="contact-intro reveal">
+          <p class="section-label">05 / GET IN TOUCH</p>
+          <h2>Have an idea?<br><span class="gradient-text">Let's connect.</span></h2>
+          <p>Interested in collaborating, discussing technology, or sharing an opportunity? I'd love to hear from you.</p>
+          <div class="contact-note"><span class="status-dot"></span> Open to meaningful conversations</div>
+        </div>
 
-            <div class="about-content">
-                <div>
-                    <h3>Passionate about technology</h3>
-                    <p>
-                        I am a Computer Science student interested in
-                        software development, web technologies and
-                        emerging innovations.
-                    </p>
-                    <p>
-                        I enjoy learning new technologies, solving
-                        problems and turning ideas into practical
-                        applications.
-                    </p>
-                </div>
+        <form id="contact-form" class="contact-form reveal">
+          <label for="name">YOUR NAME</label>
+          <input id="name" type="text" placeholder="Enter your name" maxlength="100" required>
+          <label for="email">EMAIL ADDRESS</label>
+          <input id="email" type="email" placeholder="you@example.com" maxlength="150" required>
+          <label for="message">YOUR MESSAGE</label>
+          <textarea id="message" placeholder="Tell me what's on your mind..." rows="5" required></textarea>
+          <button class="btn btn-primary" type="submit">Send Message ↗</button>
+          <p id="form-status" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+  </main>
 
-                <div class="about-box">
-                    <div><strong>01</strong><p>Web Development</p></div>
-                    <div><strong>02</strong><p>Programming</p></div>
-                    <div><strong>03</strong><p>Problem Solving</p></div>
-                </div>
-            </div>
-        </section>
-
-        <!-- SKILLS -->
-        <section id="skills" class="section">
-            <p class="section-label">WHAT I WORK WITH</p>
-            <h2 class="section-title">Technical <span>Skills</span></h2>
-
-            <div class="skills-grid">
-                <div class="skill-card">HTML5</div>
-                <div class="skill-card">CSS3</div>
-                <div class="skill-card">JavaScript</div>
-                <div class="skill-card">Python</div>
-                <div class="skill-card">Java</div>
-                <div class="skill-card">Node.js</div>
-                <div class="skill-card">Express.js</div>
-                <div class="skill-card">MySQL</div>
-                <div class="skill-card">Git & GitHub</div>
-            </div>
-        </section>
-
-        <!-- PROJECTS -->
-        <section id="projects" class="section">
-            <p class="section-label">MY RECENT WORK</p>
-            <h2 class="section-title">Featured <span>Projects</span></h2>
-
-            <div id="project-list" class="projects-grid">
-                <p>Loading projects...</p>
-            </div>
-        </section>
-
-        <!-- EDUCATION -->
-        <section id="education" class="section">
-            <p class="section-label">MY JOURNEY</p>
-            <h2 class="section-title">Education</h2>
-
-            <div class="education-card">
-                <h3>Bachelor of Technology – Computer Science</h3>
-                <p>University / College Name</p>
-                <span>Undergraduate</span>
-            </div>
-        </section>
-
-        <!-- CONTACT -->
-        <section id="contact" class="section">
-            <p class="section-label">GET IN TOUCH</p>
-            <h2 class="section-title">Let's <span>Connect</span></h2>
-
-            <p class="contact-description">
-                Have a project, opportunity or idea? Send me a message.
-            </p>
-
-            <form id="contact-form" class="contact-form">
-                <input type="text" id="name" placeholder="Your Name" required>
-                <input type="email" id="email" placeholder="Your Email" required>
-                <textarea id="message" placeholder="Your Message" rows="5" required></textarea>
-                <button type="submit" class="primary-btn">Send Message</button>
-                <p id="form-status"></p>
-            </form>
-        </section>
-    </main>
-
-    <footer>
-        <p>© <span id="year"></span> Ahamed Mahfuz. All Rights Reserved.</p>
-        <a href="#home">Back to top ↑</a>
-    </footer>
-
-    <script src="script.js"></script>
+  <footer class="footer">
+    <div class="container footer-inner">
+      <a class="logo" href="#home">AM<span>.</span></a>
+      <p>© <span id="year"></span> Ahamed Mahfuz. Built with curiosity.</p>
+      <a href="#home">Back to top ↑</a>
+    </div>
+  </footer>
 </body>
 </html>

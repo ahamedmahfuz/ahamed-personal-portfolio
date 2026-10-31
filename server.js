@@ -3,6 +3,7 @@ const express = require("express");
 const mysql = require("mysql2");
 const dotenv = require("dotenv");
 const path = require("path");
+const fs = require("fs");
 
 dotenv.config();
 
@@ -13,32 +14,56 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
 
-// Database connection
-const db = mysql.createConnection({
+// TiDB Cloud database connection
+// Use the TiDB CA certificate to verify the TLS connection.
+const caPath = path.join(__dirname, "isrgrootx1.pem");
+
+const db = mysql.createPool({
     host: process.env.DB_HOST,
-    port: Number(process.env.DB_PORT || 3306),
+    port: Number(process.env.DB_PORT || 4000),
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME
+    database: process.env.DB_NAME || "portfolio_db",
+
+    ssl: {
+        ca: fs.readFileSync(caPath),
+        rejectUnauthorized: true
+    },
+
+    waitForConnections: true,
+    connectionLimit: 10,
+    queueLimit: 0
 });
 
 let databaseConnected = false;
 
-db.connect((err) => {
-    if (err) {
-        console.error("MySQL connection failed:", err.message);
-        return;
-    }
+// Check database connection
+function checkDatabaseConnection() {
+    db.query("SELECT 1", (err) => {
+        if (err) {
+            databaseConnected = false;
+            console.error("TiDB connection failed:", err.message);
+            return;
+        }
 
-    databaseConnected = true;
-    console.log("MySQL Database Connected Successfully!");
-});
+        databaseConnected = true;
+        console.log("TiDB Cloud Database Connected Successfully!");
+    });
+}
+
+checkDatabaseConnection();
 
 // Backend and database status
 app.get("/api/status", (req, res) => {
-    res.json({
-        server: "running",
-        database: databaseConnected ? "connected" : "disconnected"
+    db.query("SELECT 1", (err) => {
+        databaseConnected = !err;
+
+        res.json({
+            server: "running",
+            database: databaseConnected
+                ? "connected"
+                : "disconnected"
+        });
     });
 });
 
@@ -48,6 +73,8 @@ app.get("/api/projects", (req, res) => {
         "SELECT * FROM projects ORDER BY id DESC",
         (err, results) => {
             if (err) {
+                console.error("Projects error:", err.message);
+
                 return res.status(500).json({
                     error: "Unable to retrieve projects"
                 });
@@ -86,9 +113,9 @@ app.post("/api/messages", (req, res) => {
     db.execute(
         sql,
         [name.trim(), email.trim(), message.trim()],
-        (err, result) => {
+        (err) => {
             if (err) {
-                console.error(err.message);
+                console.error("Message error:", err.message);
 
                 return res.status(500).json({
                     error: "Unable to save your message."
@@ -105,5 +132,5 @@ app.post("/api/messages", (req, res) => {
 
 // Start server
 app.listen(PORT, () => {
-    console.log(`Server running at http://localhost:${PORT}`);
+    console.log(`Server running on port ${PORT}`);
 });
